@@ -12,7 +12,6 @@ const { isDarwin, isLinux, isWindows } = require('./utils');
 const config = require('./config');
 const appMenu = require('./menu');
 const appTray = require('./tray');
-const analytics = require('./analytics');
 
 app.setAppUserModelId('com.denysdovhan.inboxer');
 
@@ -141,8 +140,6 @@ app.on('ready', () => {
   mainWindow = createMainWindow();
   appTray.create(mainWindow);
 
-  if (config.get('sendAnalytics')) analytics.init();
-
   if (!isDev && !isLinux) {
     autoUpdater.logger = log;
     autoUpdater.logger.transports.file.level = 'info';
@@ -156,7 +153,6 @@ app.on('ready', () => {
   });
 
   webContents.on('will-navigate', (e, url) => {
-    if (config.get('sendAnalytics')) analytics.track('will-navigate');
     if (!allowedUrl(url)) {
       e.preventDefault();
       shell.openExternal(url);
@@ -164,7 +160,6 @@ app.on('ready', () => {
   });
 
   webContents.on('new-window', (e, url) => {
-    if (config.get('sendAnalytics')) analytics.track('new-window');
     e.preventDefault();
     if (allowedUrl(url)) {
       webContents.loadURL(url);
@@ -191,7 +186,6 @@ app.on('activate', () => {
 });
 
 app.on('before-quit', () => {
-  if (config.get('sendAnalytics')) analytics.track('quit');
   isQuitting = true;
 
   if (!mainWindow.isFullScreen()) {

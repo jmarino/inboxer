@@ -63,8 +63,6 @@
     "electron-log": "^3.0.1",
     "electron-store": "^2.0.0",
     "electron-updater": "^4.0.0",
-    "first-run": "^1.2.0",
-    "insight": "^0.10.1",
     "minimatch-all": "^1.1.0"
   },
   "build": {
