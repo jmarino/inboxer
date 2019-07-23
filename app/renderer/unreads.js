@@ -8,10 +8,15 @@ const config = remote.require('../../app/main/config');
 
 const seenMessages = new Map();
 
-// gmail logo from https://gsuite.google.com/setup/resources/logos/
-const iconMail = path.join(__dirname, '..', 'static/gmail_48px.png');
-// snoozed logo copied from Inboxer
-const iconSnoozed = path.join(__dirname, '..', 'static/IconSnoozed.png');
+// global variables that will be filled with icon data from main process
+var iconMail;
+var iconSnoozed;
+// receive icon data (base64 encoded string) from main process
+ipc.on('notification-icons', function(event, icon1, icon2) {
+    iconMail = icon1;
+    iconSnoozed = icon2;
+});
+
 
 function keyByMessage({
   messageType, subject, sender, conversationLength,
@@ -101,7 +106,7 @@ function findUnreadSnoozedMessages() {
             message,
             title: sender,
             body: subject,
-            icon: `file://${icon}`,
+            icon: `data:image/src;base64,${icon}`,  // icon is base64 encoded string
           });
         }
       }

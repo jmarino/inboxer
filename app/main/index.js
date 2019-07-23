@@ -19,6 +19,11 @@ require('electron-context-menu')();
 
 const mainURL = 'https://mail.google.com/';
 
+// gmail logo from https://gsuite.google.com/setup/resources/logos/
+const iconMailFile = path.join(__dirname, '..', 'static/gmail_48px.png');
+// snoozed logo copied from Inboxer
+const iconSnoozedFile = path.join(__dirname, '..', 'static/IconSnoozed.png');
+
 let mainWindow;
 let isQuitting = false;
 let prevUnreadCount = 0;
@@ -135,6 +140,14 @@ function createMainWindow() {
   return win;
 }
 
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return Buffer.from(bitmap).toString('base64');
+}
+
 app.on('ready', () => {
   Menu.setApplicationMenu(appMenu);
   mainWindow = createMainWindow();
@@ -150,6 +163,10 @@ app.on('ready', () => {
 
   webContents.on('dom-ready', () => {
     webContents.insertCSS(fs.readFileSync(path.join(__dirname, '../renderer/browser.css'), 'utf8'));
+    // encode notification icons as base64 encoded strings and send them to renderer process
+    iconMail = base64_encode(iconMailFile);
+    iconSnoozed = base64_encode(iconSnoozedFile);
+    mainWindow.webContents.send('notification-icons', iconMail, iconSnoozed);
   });
 
   webContents.on('will-navigate', (e, url) => {
