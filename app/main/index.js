@@ -94,7 +94,7 @@ function createMainWindow() {
 
   const win = new BrowserWindow({
     show: false, // Hide application until your page has loaded
-    title: app.getName(),
+    title: app.name,
     x: windowState.x,
     y: windowState.y,
     width: windowState.width,

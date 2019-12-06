@@ -50,7 +50,7 @@ function create(win) {
   const iconPath = path.join(__dirname, '..', `static/${iconTrayFile}`);
 
   tray = new Tray(iconPath);
-  tray.setToolTip(app.getName());
+  tray.setToolTip(app.name);
   tray.setContextMenu(Menu.buildFromTemplate(contextMenu(win)));
 
   tray.on('click', () => (win.isVisible() ? win.hide() : win.show()));

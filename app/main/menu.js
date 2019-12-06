@@ -358,7 +358,7 @@ const helpItems = [
   },
   { type: 'separator' },
   {
-    label: `${app.getName()} Website`,
+    label: `${app.name} Website`,
     click() {
       shell.openExternal(pkg.homepage);
     },
@@ -388,7 +388,7 @@ const helpItems = [
 
 const darwinTemplate = [
   {
-    label: app.getName(),
+    label: app.name,
     submenu: [
       { role: 'about' },
       { type: 'separator' },
@@ -485,8 +485,8 @@ const otherTemplate = [
         role: 'about',
         click() {
           dialog.showMessageBox({
-            title: `About ${app.getName()}`,
-            message: `${app.getName()} ${app.getVersion()}`,
+            title: `About ${app.name}`,
+            message: `${app.name} ${app.getVersion()}`,
             detail: `Created by ${pkg.author.name}`,
             icon: path.join(__dirname, '..', 'static/Icon.png'),
           });
