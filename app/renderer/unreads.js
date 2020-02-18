@@ -64,7 +64,13 @@ function extractNumberUnread() {
 
 // returns array of notifications: {message, title, body, icon}
 function findUnreadSnoozedMessages() {
-  const messageTable = $('div.Cp table.F');
+  // Apr 2020: gmail now places empty identical tables before or after the actual message table
+  // Look for the first table that has any rows in it
+  const messageTables = Array.from($$('div.Cp table.F')).filter((messageTable) => {
+      const trs = $$('tr', messageTable);
+      return trs.length > 0;
+  });
+  const messageTable = messageTables[0];
   if (messageTable === null) {
     return [];
   }
