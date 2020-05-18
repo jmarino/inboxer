@@ -53,7 +53,7 @@
     "npm-run-all": "^4.1.2",
     "png2icns": "0.0.1",
     "png2icons": "^0.9.1",
-    "prettier-eslint-cli": "^4.7.1"
+    "prettier-eslint-cli": "^5.0.0"
   },
   "dependencies": {
     "asar": "^1.0.0",
